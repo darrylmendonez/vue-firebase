@@ -48,12 +48,14 @@ ul {
   list-style-type: none;
   padding: 0;
 }
-
-a {
-  color: #42b983;
-}
 li {
   display: inline-block;
   margin: 10px;
+}
+a {
+  color: #42b983;
+}
+a.router-link-exact-active {
+  color: purple;
 }
 </style>
