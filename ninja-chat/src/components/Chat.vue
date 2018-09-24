@@ -20,6 +20,8 @@
 
 <script>
 import NewMessage from '@/components/NewMessage'
+import db from '@/firebase/init'
+
 export default {
   name: 'Chat',
   props: ['name'],
@@ -30,6 +32,23 @@ export default {
     return {
 
     }
+  },
+  created() {
+    let ref = db.collection('messages')
+
+    ref.onSnapshot(snapshot => {
+      snapshot.docChanges().forEach(change => {
+        if (change.type == 'added') {
+          let doc = change.doc
+          this.messages.push({
+            id: doc.id,
+            name: doc.data().name,
+            content: doc.data().content,
+            timestamp: doc.data().timestamp
+          })
+        }
+      })
+    })
   }
 }
 </script>
