@@ -4,10 +4,10 @@
     <div class="card">
       <div class="card-content">
         <ul class="messages">
-          <li>
-            <span class="teal-text">Name</span>
-            <span class="grey-text text-darken-3">message</span>
-            <span class="grey-text time">time</span>
+          <li v-for="message in messages" :key="message.id">
+            <span class="teal-text">{{ message.name }}</span>
+            <span class="grey-text text-darken-3">{{ message.content }}</span>
+            <span class="grey-text time">{{ message.timestamp }}</span>
           </li>
         </ul>
       </div>
@@ -30,11 +30,11 @@ export default {
   },
   data() {
     return {
-
+      messages: []
     }
   },
   created() {
-    let ref = db.collection('messages')
+    let ref = db.collection('messages').orderBy('timestamp')
 
     ref.onSnapshot(snapshot => {
       snapshot.docChanges().forEach(change => {
